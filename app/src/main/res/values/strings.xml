@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">FieldScanner</string>
+    <string name="captured_photo">Captured photo</string>
+</resources>

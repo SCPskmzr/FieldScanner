@@ -1,0 +1,47 @@
+# Платформа, разрешения и сборка
+
+## Платформа
+
+Один Gradle-модуль `:app`: Kotlin 1.8.20, Android Gradle Plugin 8.0.2, compile/target SDK 33, minSdk 24, Java 17. Целевое устройство — Samsung Galaxy XCover 4s, поэтому зависимости и потребление памяти должны оставаться умеренными.
+
+Manifest объявляет camera, microphone, location, internet и phone permissions. Camera и telephony declared as optional hardware features, чтобы permissions не ограничивали установку на неподдерживаемых устройствах.
+
+## Ресурсы и тема приложения
+
+`res/values/` и `res/values-night/` держат тему (`themes.xml`), палитру (`colors.xml`) и строки (`strings.xml`). После TASK-029 `strings.xml` содержит только `app_name` и accessibility-описание `captured_photo` — все тексты ошибок камеры, анализа и сохранения удалены, потому что ошибки теперь бестекстовые (причина в `DiagnosticsLog`, на экране — импульс `DisplayZonesView.playErrorSignal()`). В release-сборке ребёнок не должен видеть текста (решение «No visible text for children»), поэтому новые пользовательские строки сюда не добавляются; барьер против регресса — unit-тест `ReleaseTextBarrierTest`. `res/values-v27/themes.xml` (TASK-033) переопределяет `Theme.FieldScanner` на API 27+, добавляя `android:windowLayoutInDisplayCutoutMode = shortEdges`, чтобы окно могло заходить под вырез камеры; сам артворк держится внутри cutout-safe области средствами `DisplayZonesView` (`docs/modules/ui-and-input.md`, секция «Масштабирование дисплея»). `res/xml/` содержит `backup_rules.xml` и `data_extraction_rules.xml`, на которые ссылается манифест (`android:fullBackupContent`, `android:dataExtractionRules`). `gradle.properties` и `gradle/wrapper/` (версия Gradle) — тоже конфигурация сборки уровня проекта. Иконка запуска (`res/mipmap-*`, `ic_launcher_*` в `res/drawable*`) и скрипты `gradlew`/`gradlew.bat` — сгенерированные Android Studio / Gradle артефакты; они внесены в список исключений самопроверки `scripts/check-documentation` и модульной страницы не имеют.
+
+## Проверка
+
+Три команды (TASK-030), каждая — тонкий указатель в `.claude/commands/` на этот раздел, `AGENTS.md` и соответствующий скрипт:
+
+- `/verify` — только build check: `./scripts/verify.ps1` (Windows) или `./scripts/verify` (Linux/macOS/CI). Без устройства.
+- `/install` — `./scripts/install.ps1` (Windows-only): взять уже собранный debug APK, поставить его на устройство и запустить FieldScanner. Без Gradle-задач.
+- `/verify-install` — `./scripts/verify-and-install.ps1` (Windows-only): полный task gate, затем установка и запуск APK.
+- `/merge` — `./scripts/merge-task.ps1 <TASK-NNN|task-nnn> [-NoInstallReminder]` (Windows-only, TASK-032): интеграция закрытой ветки `task-nnn` в base-ветку (`scripts/base-branch.txt`) в главном checkout.
+
+`/merge` ветвится по тому, меняет ли merge дерево. **Fast-forward** (base-ветка — предок `task-nnn`, расхождения нет): смёрдженное дерево побайтово совпадает с вершиной ветки, которую worktree уже проверил через `verify.ps1`, поэтому `/merge` делает `git merge --ff-only` и **не запускает ни одной Gradle-задачи** (`gradlew`/`verify.ps1` не вызываются). **Divergent** (base-ветка ушла вперёд с момента ответвления, либо в одну пачку интегрируется несколько веток): `/merge` делает `git merge --no-ff --no-commit`, гоняет `./scripts/verify.ps1` на результате и оставляет merge-коммит (`merge: integrate TASK-NNN (task-nnn)`) только при PASS; при конфликте или FAIL выполняет `git merge --abort`, оставляя base-ветку, рабочее дерево и индекс нетронутыми (без `MERGE_HEAD`). `/merge` отказывается работать (ненулевой код, base-ветка не тронута) из linked worktree, когда `HEAD` не на base-ветке, при грязном дереве (`git status --porcelain` непустой), для несуществующей ветки и для уже смёрдженной ветки. Устройство/`adb`/эмулятор не задействуются; установка на XCover 4s остаётся отдельным шагом владельца (`./scripts/verify-and-install.ps1`), очистка worktree — `./scripts/remove-worktree.ps1`.
+
+`verify` (оба варианта) выполняет documentation gate (`scripts/check-documentation`), его completeness self-check (`--self-check` / `-SelfCheck`), `:app:lintDebug`, `:app:testDebugUnitTest` и `:app:assembleDebug`. Documentation gate сопоставляет каждую область исходников под `app/src/main/` и корневые Gradle-файлы с конкретной страницей `docs/modules/`; сопоставление префиксов регистрозависимое, self-check падает на любом файле без правила или явного исключения. Оба входа принимают base ref (`./scripts/verify <ref>`, `./scripts/verify.ps1 -BaseRef <ref>`), который пробрасывается в gate и объединяет коммиты ветки с рабочим деревом (нужно worktree-режиму, TASK-019); без аргумента поведение не меняется. Для запуска нужен JDK 17 (AGP 8.0.2) и Android SDK. `verify.ps1` при незаданном `JAVA_HOME` сам подставляет Android Studio JBR (`C:\AndroidStudio\jbr`) через общий хелпер `scripts/jdk-common.ps1` (`Resolve-Jdk17`); если и JBR нет — падает с понятным сообщением до запуска Gradle. `JAVA_HOME` из окружения всегда имеет приоритет; переопределить путь к JBR для тестовых сценариев можно переменной `FIELDSCANNER_JBR`. Тот же fallback получают `verify-and-install.ps1` и `install.ps1` через `device-install-common.ps1` (там отсутствие JBR не фатально). POSIX `scripts/verify` фиксированного пути не имеет и рассчитывает на JDK 17 в окружении/CI. Инструментальные тесты не входят в стандартную проверку, поскольку им нужен эмулятор или устройство.
+
+`./scripts/verify-and-install.ps1` сначала запускает полную проверку, а только после её успеха устанавливает и запускает APK. По умолчанию выбран единственный USB-девайс; для эмулятора явно укажите `-Target emulator`.
+
+### Тест-скоуп и Robolectric (TASK-020)
+
+`:app:testDebugUnitTest` — это по-прежнему в основном чистые JVM-тесты, но с TASK-020 в нём есть локальный смоук-тест старта приложения (`MainActivityStartupSmokeTest`), который поднимает реальные `FieldScannerApplication` и `MainActivity` на JVM и падает, если экран сканера перестаёт подниматься (исключение в `onCreate`, развал графа `buildScreen()`, сломанная инфляция `activity_main`, пропавшая `View`). Ради него в `app/build.gradle` добавлены:
+
+- `testImplementation 'org.robolectric:robolectric:4.10.3'` — единственная новая тест-зависимость, только в тест-скоупе; на первом прогоне чистой машины/worktree она тянет `android-all-*.jar` из сети.
+- `android.testOptions { unitTests { includeAndroidResources = true } }` — Robolectric-у нужны смёрдженные ресурсы и тема, чтобы инфлировать `activity_main`.
+
+Шов для теста: `MainActivity.containerFactory` (`internal var` с продакшн-значением по умолчанию) плюс `open` ленивые порты в `AppContainer`; тест подменяет граф `TestAppContainer`-ом с фейками портов, поэтому старт не открывает Room, не ходит в OpenAI и не трогает геолокацию. Продакшн-поведение не меняется. Подробнее о том, что смоук покрывает и что нет — `docs/modules/ui-and-input.md` и `docs/agent-memory/gotchas.md`.
+
+`./scripts/install.ps1` — тот же путь установки и запуска без гейта: он не выполняет ни одной Gradle-задачи, а берёт готовый `app/build/outputs/apk/debug/app-debug.apk`. Если APK отсутствует, скрипт завершается ненулевым кодом и просит сначала выполнить `/verify` или `/verify-install`; если под `-Target usb|emulator` (по умолчанию `usb`) нет готового устройства — завершается ненулевым кодом с указанием этого. Логика установки + запуска (`adb install -r`, `am start` на `com.fieldscanner.app/.MainActivity`, резолвинг `adb`/JBR, проверка устройства) вынесена в общий дот-сорс-хелпер `scripts/device-install-common.ps1`, который используют оба скрипта; контракт status-маркера (`app/build/verify-and-install-status.txt`) по-прежнему принадлежит только `verify-and-install.ps1` — `install.ps1` его не трогает. Все три — действия владельца репозитория на смёрдженном результате, не в worktree и не параллельно.
+
+Windows-скрипт постоянно обновляет `app/build/verify-and-install-status.txt`: `RUNNING` означает, что итог ещё неизвестен, `PASS` подтверждает полный сценарий, а `FAIL` содержит причину ошибки. Подробный поток сохраняется в `app/build/verify-and-install.log`. Эти файлы позволяют проверить долгий запуск в средах, которые обрезают вывод терминала. Папка `app/build` является generated output и не коммитится.
+
+Оба PowerShell-скрипта используют обычный per-user Gradle User Home (по умолчанию `C:\Users\…\.gradle`) и не переопределяют `GRADLE_USER_HOME`. Gradle синхронизирует dependency cache file-lock'ами между локальными процессами; при этом `.gradle/` и `app/build/` остаются отдельными в каждом worktree. Не копируйте Gradle-кэши при создании worktree. Если вывод терминала обрезан, не запускайте Gradle повторно до проверки маркера; повтор допустим только после устранения конкретной ошибки.
+
+GitHub Actions повторяет Linux-команду для pull request и push в `master`; она устанавливает Android SDK platform 33 и build-tools 33.0.2.
+
+## Диагностика владельца
+
+`FieldScannerApplication` устанавливает обработчик необработанных исключений, который сначала сохраняет причину, затем передаёт её штатному Android-обработчику. `AndroidDiagnosticsLog` пишет нормальные записи последовательно в фоновый поток, в Logcat и в два кольцевых файла внутреннего хранилища: `field-scanner-diagnostics.log` и одна предыдущая ротация `.1.log`. Каждый файл ограничен 128 KiB, суммарно — 256 KiB. Форматтер вырезает значение `OPENAI_API_KEY`, заголовок `Authorization`, а тело HTTP-ошибки ограничивает 1024 символами; диагностические сообщения не показываются в UI ребёнка.

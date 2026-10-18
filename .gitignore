@@ -1,0 +1,24 @@
+*.iml
+/.idea
+.gradle
+/.gradle-user-home
+/.gradle-user
+/.tooling
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+hs_err_pid*.log
+replay_pid*.log
+
+# Claude Code local (personal) settings
+.claude/settings.local.json

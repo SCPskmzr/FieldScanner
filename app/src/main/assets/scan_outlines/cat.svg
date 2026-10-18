@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 200">
+  <path id="outline" d="M224 173 Q224 142 224 119 Q220 104 200 100 L176 96 L200 88 L216 65 L232 35 Q256 69 272 46 Q296 38 320 77 Q340 96 372 104 Q416 112 452 112 Q480 115 500 135 Q516 150 512 169 Q500 177 484 173 Q468 169 472 154 Q476 138 492 150 Q512 162 532 177 Q552 188 568 177 Q584 162 580 135 Q576 100 572 69 Q568 42 580 31"
+        fill="none" stroke="#FF8E25" stroke-width="3.5"
+        stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

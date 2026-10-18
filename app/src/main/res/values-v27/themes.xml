@@ -1,0 +1,11 @@
+<resources>
+    <!--
+      Allow the window to extend under a display cutout (API 27+). The actual
+      artwork stays inside the cutout-safe area: DisplayZonesView fits it within
+      the DisplayCutout safe insets (see TASK-033 and docs/modules/ui-and-input.md).
+      With no cutout this attribute has no effect and the fit is a plain letterbox.
+    -->
+    <style name="Theme.FieldScanner" parent="Base.Theme.FieldScanner">
+        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
+    </style>
+</resources>

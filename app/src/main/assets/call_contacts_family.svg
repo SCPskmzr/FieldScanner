@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" fill="none">
+  <!-- Three separate outline silhouettes: mother left, child center, father right. -->
+  <g stroke="#4A4A48" stroke-width="14" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Mother: 80% scale. -->
+    <circle cx="125" cy="174" r="35"/>
+    <path d="M125 228H102C81 228 65 245 65 267V393H88V447H166V393H178V267C178 245 162 228 141 228H125Z"/>
+
+    <!-- Child: 60% scale. -->
+    <circle cx="256" cy="266" r="27"/>
+    <path d="M256 307H240C223 307 214 323 214 343V447H298V343C298 323 289 307 272 307H256Z"/>
+
+    <!-- Father: 100% scale. -->
+    <circle cx="401" cy="120" r="43"/>
+    <path d="M401 177H370C345 177 326 197 326 222V397H350V447H452V397H475V222C475 197 456 177 431 177H401Z"/>
+  </g>
+</svg>

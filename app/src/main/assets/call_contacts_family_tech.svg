@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="894" height="559" viewBox="0 0 894 559" fill="none">
+  <!-- Wide techno-rune contact art sized to the FieldScanner central display. -->
+  <rect width="894" height="559" fill="#100D09"/>
+  <g transform="scale(1.74609375 1.091796875)" stroke="#F2A339" stroke-linecap="square" stroke-linejoin="miter">
+    <!-- Mother: slender 80% silhouette, gently asymmetric. -->
+    <path d="M125 139L154 155L160 190L135 211L101 196L94 162L125 139Z" stroke-width="12"/>
+    <path d="M115 150L139 194M100 179H119" stroke-width="7"/>
+    <path d="M123 228L101 231L76 251L70 393H90V447H164V393H178V270L160 238L141 228H123Z" stroke-width="13"/>
+    <path d="M81 279L94 270M166 310L178 296M74 416H88M164 432L177 420" stroke-width="6"/>
+    <!-- Child: compact 60% silhouette, clear but irregular. -->
+    <path d="M255 239L278 252L282 278L261 293L235 284L231 258L255 239Z" stroke-width="10"/>
+    <path d="M244 250L267 280" stroke-width="5"/>
+    <path d="M256 307L238 310L218 329L214 447H298V343L282 314L270 307H256Z" stroke-width="12"/>
+    <path d="M208 368H220M289 398L301 386M224 429H236" stroke-width="5"/>
+    <!-- Father: tallest 100% silhouette, broad and slightly offset. -->
+    <path d="M400 77L434 95L441 136L411 159L374 143L367 105L400 77Z" stroke-width="14"/>
+    <path d="M383 94L419 142M371 118H388M430 111L447 100" stroke-width="7"/>
+    <path d="M400 177L369 180L341 202L334 397H352V447H452V397H475V222L454 190L431 177H400Z" stroke-width="16"/>
+    <path d="M342 252L359 240M456 290L475 278M335 414H352M451 432L468 417" stroke-width="7"/>
+  </g>
+</svg>

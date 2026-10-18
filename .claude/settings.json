@@ -1,0 +1,34 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(./scripts/verify.ps1)",
+      "PowerShell(.\\\\scripts\\\\verify.ps1)",
+      "PowerShell(./scripts/verify.ps1 *)",
+      "PowerShell(.\\\\scripts\\\\verify.ps1 *)",
+      "PowerShell(./scripts/verify-and-install.ps1)",
+      "PowerShell(.\\\\scripts\\\\verify-and-install.ps1)",
+      "PowerShell(./scripts/verify-and-install.ps1 *)",
+      "PowerShell(.\\\\scripts\\\\verify-and-install.ps1 *)",
+      "PowerShell(./scripts/install.ps1)",
+      "PowerShell(.\\\\scripts\\\\install.ps1)",
+      "PowerShell(./scripts/install.ps1 *)",
+      "PowerShell(.\\\\scripts\\\\install.ps1 *)",
+      "PowerShell(./scripts/check-documentation.ps1)",
+      "PowerShell(.\\\\scripts\\\\check-documentation.ps1)",
+      "PowerShell(./scripts/check-documentation.ps1 *)",
+      "PowerShell(.\\\\scripts\\\\check-documentation.ps1 *)",
+      "PowerShell(./scripts/next-task-id.ps1)",
+      "PowerShell(.\\\\scripts\\\\next-task-id.ps1)",
+      "PowerShell(./scripts/new-worktree.ps1 *)",
+      "PowerShell(.\\\\scripts\\\\new-worktree.ps1 *)",
+      "PowerShell(./scripts/remove-worktree.ps1 *)",
+      "PowerShell(.\\\\scripts\\\\remove-worktree.ps1 *)",
+      "PowerShell(./scripts/merge-task.ps1 *)",
+      "PowerShell(.\\\\scripts\\\\merge-task.ps1 *)",
+      "Bash(./scripts/verify)",
+      "Bash(./scripts/verify *)",
+      "Bash(./scripts/check-documentation)",
+      "Bash(./scripts/check-documentation *)"
+    ]
+  }
+}

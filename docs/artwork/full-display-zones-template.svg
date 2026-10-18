@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  FieldScanner full-display geometry template.
+
+  This is the editable design source for the physical display zones. Its viewBox
+  uses the exact coordinate space consumed by DisplayGeometry.kt (1286 × 745).
+  Keep each zone as one closed path and preserve its id. When the paths are
+  changed, provide this SVG back to the development team so the coordinates can
+  be copied into DisplayGeometry.kt.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" width="1286" height="745" viewBox="0 0 1286 745">
+  <title>FieldScanner full display-zone template</title>
+  <desc>Editable template of the left, central, lower, and three right rune display zones.</desc>
+
+  <rect id="artboard" width="1286" height="745" fill="#080908"/>
+
+  <!-- Keep one closed path per physical display zone. -->
+  <g id="display-zones" fill-opacity="0.25" stroke-width="3">
+    <path id="left-zone"
+      d="M34.9 78.5 L76.9 71.9 L99.2 88.5 L139.1 373.4 L185 641 L185 691 L150.5 712.5 L74.5 705 L44.5 691 L35.5 618.5 L61.5 561 L18.5 99.7 Z"
+      fill="#C22EB0" stroke="#F5A4EA"/>
+    <path id="center-zone"
+      d="M260.8 39.2 L164 128.1 L157.6 144.6 L189.7 505.1 L194.8 516.8 L259.1 587.8 L279 593.7 L661.7 491.8 L665.9 491.2 L986.4 475.6 L1005.2 458.6 L1050.7 152.5 L1050.4 145.1 L1031.4 60.3 L1011.3 44.7 L569.3 56.8 L275.9 34 Z"
+      fill="#F0A126" stroke="#FFE0A0"/>
+    <path id="bottom-zone"
+      d="M924.3 619.2 L924.3 533 L902.1 513.1 L639.6 541.1 L637 541.6 L332 618.8 L317.1 641.3 L325.6 694.4 L345.3 711.3 L931.5 711.3 L949.9 683.4 L925.9 627 Z"
+      fill="#64645B" stroke="#D8D8C4"/>
+    <path id="hint-zone-1"
+      d="M1141.7 63.6 L1090.8 124.3 L1087.1 143.3 L1111.8 220.1 L1132.7 233.8 L1222.1 225.7 L1240 209.2 L1255.3 120.5 L1244.8 99.3 L1166.2 58.7 Z"
+      fill="#F0A126" stroke="#FFE0A0"/>
+    <path id="hint-zone-2"
+      d="M1203 296 L1114.3 311.9 L1097.9 331.8 L1099.4 438.2 L1124.7 457.2 L1250.5 422.2 L1263.4 394.8 L1224.8 307.6 Z"
+      fill="#F0A126" stroke="#FFE0A0"/>
+    <path id="hint-zone-3"
+      d="M1138.9 523.5 L1055.8 526.2 L1037.1 541.3 L1020.7 606.2 L1025.2 624.5 L1080.8 686.2 L1103.1 691.4 L1167 665.5 L1177.1 656.4 L1206.2 602.4 L1202.8 578.9 L1153.7 529.4 Z"
+      fill="#F0A126" stroke="#FFE0A0"/>
+  </g>
+</svg>

@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+cd "$(dirname "$0")/.."
+
+export GRADLE_USER_HOME="${GRADLE_USER_HOME:-$HOME/.gradle}"
+
+# Documentation change-gate. $1, when given, is a base ref (e.g. a worktree
+# feature branch's base): check-documentation unions those branch commits with
+# the working tree. Without it the behaviour is unchanged (working tree only).
+./scripts/check-documentation "${1:-}"
+
+# Completeness self-check: every source area under app/src/main/ and every root
+# Gradle file must map to a module page or an explicit in-script exclusion.
+./scripts/check-documentation --self-check
+
+# Requires JDK 17 on JAVA_HOME / PATH: AGP 8.0.2 rejects older JDKs. CI and the
+# POSIX path are expected to provide their own JDK 17; there is no fixed fallback
+# path here (scripts/verify.ps1 falls back to the Android Studio JBR on Windows).
+./gradlew :app:lintDebug :app:testDebugUnitTest :app:assembleDebug --no-daemon --console=plain
