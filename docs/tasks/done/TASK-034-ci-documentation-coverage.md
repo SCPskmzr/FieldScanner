@@ -51,7 +51,7 @@ docs/modules/scanner.md, docs/modules/platform-and-build.md.
 - Bash documentation gate and self-check: PASS. Full Windows task gate: PASS
   (`BUILD SUCCESSFUL`, lintDebug, testDebugUnitTest, assembleDebug; exit 0).
 - Independent read-only verifier: PASS; no findings. git diff --check: PASS.
-- Closing commit: recorded by SHA in the follow-up task record commit.
+- Closing commit: `23152f05e2d6a24a9fce95cd5ab36b3121cf45fb`.
 - Memory write-back: existing workflows memory already requires table parity;
   no new durable knowledge and no covered application-module changes.
 - GitHub CI after push is not yet verified. Device installation is outside scope.
