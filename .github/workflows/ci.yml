@@ -24,4 +24,6 @@ jobs:
       - name: Verify
         env:
           DOCS_BASE_REF: ${{ github.event.pull_request.base.sha || github.event.before }}
-        run: bash ./scripts/verify "$DOCS_BASE_REF"
+        run: |
+          chmod +x scripts/verify scripts/check-documentation gradlew
+          ./scripts/verify "$DOCS_BASE_REF"
