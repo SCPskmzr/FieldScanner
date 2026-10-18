@@ -27,6 +27,7 @@ coverage=(
   'app/src/main/java/com/fieldscanner/app/ScannerViewModel|docs/modules/scanner.md'
   'app/src/main/java/com/fieldscanner/app/AppContainer.kt|docs/modules/scanner.md'
   'app/src/main/java/com/fieldscanner/app/camera/|docs/modules/scanner.md'
+  'app/src/main/java/com/fieldscanner/app/data/camera/|docs/modules/scanner.md'
   # Findings, journal, persistence, media, device location
   'app/src/main/java/com/fieldscanner/app/data/finding/|docs/modules/findings-and-journal.md'
   'app/src/main/java/com/fieldscanner/app/data/location/|docs/modules/findings-and-journal.md'
@@ -36,12 +37,14 @@ coverage=(
   'app/src/main/java/com/fieldscanner/app/data/analysis/|docs/modules/ai-services.md'
   'app/src/main/java/com/fieldscanner/app/data/speech/|docs/modules/ai-services.md'
   'app/src/main/java/com/fieldscanner/app/data/net/|docs/modules/ai-services.md'
+  'app/src/main/java/com/fieldscanner/app/data/diagnostics/|docs/modules/platform-and-build.md'
   'app/src/main/java/com/fieldscanner/app/voice/|docs/modules/ai-services.md'
   'app/src/main/assets/prompts/|docs/modules/ai-services.md'
   # Telephony / whitelist
   'app/src/main/java/com/fieldscanner/app/calls/|docs/modules/telephony.md'
   # Platform, manifest, build config, app resources and theme
   'app/src/main/AndroidManifest.xml|docs/modules/platform-and-build.md'
+  'app/src/main/java/com/fieldscanner/app/FieldScannerApplication.kt|docs/modules/platform-and-build.md'
   'app/src/main/res/values|docs/modules/platform-and-build.md'
   'app/src/main/res/xml/|docs/modules/platform-and-build.md'
   'build.gradle|docs/modules/platform-and-build.md'

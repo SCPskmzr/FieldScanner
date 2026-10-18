@@ -24,9 +24,9 @@ will be pushed there without merging the unrelated local history.
 
 ## Acceptance criteria
 
-- [ ] Bash and PowerShell coverage tables have identical source/document pairs.
-- [ ] Both documentation self-checks pass on the real source tree.
-- [ ] Existing CI setup and executable-permission fixes remain intact.
+- [x] Bash and PowerShell coverage tables have identical source/document pairs.
+- [x] Both documentation self-checks pass on the real source tree.
+- [x] Existing CI setup and executable-permission fixes remain intact.
 
 ## Out of scope
 
@@ -39,11 +39,19 @@ docs/modules/scanner.md, docs/modules/platform-and-build.md.
 
 ## Verification
 
-- [ ] `./scripts/verify.ps1 -BaseRef origin/master`: documentation, self-check, lint, unit tests, APK.
-- [ ] Bash documentation change gate and self-check; coverage table parity.
-- [ ] Independent diff review and acceptance criteria checked.
+- [x] `./scripts/verify.ps1 -BaseRef origin/master`: documentation, self-check, lint, unit tests, APK.
+- [x] Bash documentation change gate and self-check; coverage table parity.
+- [x] Independent diff review and acceptance criteria checked.
 - GitHub CI is checked after push; no device installation for this CI-only fix.
 
 ## Outcome
 
-Pending.
+- Added three Bash mappings for data/camera, data/diagnostics, and FieldScannerApplication.
+- All 38 source/document pairs match PowerShell; module pages already describe them.
+- Bash documentation gate and self-check: PASS. Full Windows task gate: PASS
+  (`BUILD SUCCESSFUL`, lintDebug, testDebugUnitTest, assembleDebug; exit 0).
+- Independent read-only verifier: PASS; no findings. git diff --check: PASS.
+- Closing commit: recorded by SHA in the follow-up task record commit.
+- Memory write-back: existing workflows memory already requires table parity;
+  no new durable knowledge and no covered application-module changes.
+- GitHub CI after push is not yet verified. Device installation is outside scope.
